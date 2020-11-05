@@ -89,17 +89,17 @@ class StateMachineTest : FreeSpec({
 
         val sm1 = stateMachine {
             mappings(
-                Ice by Heat goto Liquid,
-                Ice by Chill goto Ice,
+                Ice by Heat goesTo Liquid,
+                Ice by Chill goesTo Ice,
 
-                Liquid by Heat goto Steam,
-                Liquid by Chill goto Ice,
-                Liquid by Drink goto Empty,
+                Liquid by Heat goesTo Steam,
+                Liquid by Chill goesTo Ice,
+                Liquid by Drink goesTo Empty,
 
-                Steam by Heat goto Steam,
-                Steam by Chill goto Liquid,
+                Steam by Heat goesTo Steam,
+                Steam by Chill goesTo Liquid,
 
-                Empty by Fill goto Liquid
+                Empty by Fill goesTo Liquid
             )
             initialState = Empty
         }

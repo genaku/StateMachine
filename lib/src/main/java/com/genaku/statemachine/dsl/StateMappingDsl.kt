@@ -13,7 +13,7 @@ infix fun StateVector.to(destination: IState): StateMapping = StateMapping(
   destination = destination
 )
 
-infix fun StateVector.goto(destination: IState): StateMapping = StateMapping(
+infix fun StateVector.goesTo(destination: IState): StateMapping = StateMapping(
   source = source,
   action = action,
   destination = destination
