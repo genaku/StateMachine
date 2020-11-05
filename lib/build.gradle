@@ -1,5 +1,6 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
+apply plugin: 'com.github.dcendents.android-maven'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -8,6 +9,8 @@ dependencies {
     implementation 'io.kotest:kotest-assertions-core:4.3.1'
     implementation 'io.kotest:kotest-property:4.3.1'
 }
+
+group='com.github.genaku'
 
 tasks.withType(Test) {
     useJUnitPlatform()
@@ -23,6 +26,3 @@ compileTestKotlin {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 }
-
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
