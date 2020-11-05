@@ -8,4 +8,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
+
+//    val sm = stateMachine{
+//        mappings(
+//            Ice by Heat goesTo Water
+//        )
+//    }
+//
+//    object Heat: IAction
+//    object Ice: IState
+//    object Water: IState
 }
