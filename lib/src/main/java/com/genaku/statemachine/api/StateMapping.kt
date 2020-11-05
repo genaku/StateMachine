@@ -11,15 +11,15 @@ package com.genaku.statemachine.api
  * ```
  * where `AtoB` is the action, and `A` and `B` are states.
  *
- * @param source the origin state (where the transition would start from)
- * @param action the trigger/action (what makes the transition start)
+ * @param source class of the origin state (where the transition would start from)
+ * @param action class of the trigger/action (what makes the transition start)
  * @param destination the goal state (where the transition would end at)
  */
 data class StateMapping(
-    val source: IState,
-    val action: IAction,
+    val source: Class<out IState>,
+    val action: Class<out IAction>,
     val destination: IState
 ) {
     override fun toString() =
-        "Mapping (${source.javaClass.simpleName}) ---[${action.javaClass.simpleName}]--> (${destination.javaClass.simpleName})"
+        "Mapping (${source.simpleName}) ---[${action.simpleName}]--> (${destination.javaClass.simpleName})"
 }

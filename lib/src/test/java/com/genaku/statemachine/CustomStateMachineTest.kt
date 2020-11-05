@@ -10,22 +10,26 @@ class CustomStateMachineTest : FreeSpec() {
 
     private val sm = stateMachine {
         mappings(
-            LoginPassPreCheck() by Reset goesTo LoginPassInput,
-            LoginPassPreCheck() by Cancel goesTo LoginPassInput,
-            LoginPassPreCheck() by NoConnection goesTo LoginPassInput,
-            LoginPassPreCheck() by ServerAnswerNo goesTo LoginPassInput,
-            LoginPassPreCheck() by ServerAnswerYes goesTo OpenNewPinInput(),
+            LoginPassPreCheck::class.java by Reset goesTo LoginPassInput,
+            LoginPassPreCheck::class.java by Cancel goesTo LoginPassInput,
+            LoginPassPreCheck::class.java by NoConnection goesTo LoginPassInput,
+            LoginPassPreCheck::class.java by ServerAnswerNo goesTo LoginPassInput,
+            LoginPassPreCheck::class.java by ServerAnswerYes goesTo OpenNewPinInput(),
 
-            OpenNewPinInput() by Reset goesTo LoginPassInput,
+            OpenNewPinInput::class.java by Reset goesTo LoginPassInput,
 
             LoginPassInput by LoginPassEntered goesTo LoginPassPreCheck()
         )
         initialState = LoginPassInput
     }
 
+    fun d() {
+        LoginPassPreCheck::class.java by Reset::class.java
+    }
+
     private val sm1 = stateMachine {
         mappings(
-            Reset moves LoginPassPreCheck() to LoginPassInput,
+            Reset moves LoginPassPreCheck::class.java to LoginPassInput,
             Reset moves OpenNewPinInput() to LoginPassInput,
 
             LoginPassEntered moves LoginPassInput to LoginPassPreCheck(),
