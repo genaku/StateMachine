@@ -13,10 +13,18 @@ infix fun StateVector.to(destination: IState): StateMapping = StateMapping(
   destination = destination
 )
 
+infix fun StateVector.goto(destination: IState): StateMapping = StateMapping(
+  source = source,
+  action = action,
+  destination = destination
+)
+
 /**
  * Binds an [IAction] and a source [IState] into a [StateVector].
  */
 infix fun IAction.moves(source: IState): StateVector = StateVector(source, this)
+
+infix fun IState.by(action: IAction): StateVector = StateVector(this, action)
 
 /**
  * Holds a [IState] and an [IAction], without knowing anything about the resulting state.

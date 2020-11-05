@@ -4,9 +4,7 @@ import com.genaku.statemachine.api.IAction
 import com.genaku.statemachine.api.IState
 import com.genaku.statemachine.api.IncubationPassedException
 import com.genaku.statemachine.api.NoMappingException
-import com.genaku.statemachine.dsl.moves
-import com.genaku.statemachine.dsl.stateMachine
-import com.genaku.statemachine.dsl.to
+import com.genaku.statemachine.dsl.*
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -88,6 +86,24 @@ class StateMachineTest : FreeSpec({
             )
             initialState = Empty
         }
+
+        val sm1 = stateMachine {
+            mappings(
+                Ice by Heat goto Liquid,
+                Ice by Chill goto Ice,
+
+                Liquid by Heat goto Steam,
+                Liquid by Chill goto Ice,
+                Liquid by Drink goto Empty,
+
+                Steam by Heat goto Steam,
+                Steam by Chill goto Liquid,
+
+                Empty by Fill goto Liquid
+            )
+            initialState = Empty
+        }
+
         "initial state should be Empty" - {
             sm.currentState shouldBe Empty
             sm.lastAction shouldBe CoreAction.Birth

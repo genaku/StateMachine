@@ -36,22 +36,22 @@ class StateMachine : IStateMachine {
         existing: StateMapping,
         mapping: StateMapping
     ): Boolean {
-        return (existing.source == mapping.source) &&
-                (existing.action == mapping.action) &&
-                (existing.destination != mapping.destination)
+        return areEqual(existing.source, mapping.source) &&
+                areEqual(existing.action, mapping.action) &&
+                !areEqual(existing.destination, mapping.destination)
     }
 
     @Synchronized
     @Throws(IllegalStateException::class, NoMappingException::class)
     override fun transition(action: IAction) {
-        if (action == CoreAction.Birth) {
+        if (areEqual(action, CoreAction.Birth)) {
             throw IllegalStateException("State machine can't be reborn, create a new instance")
         }
 
         // try to find a mapping
         stateMappings
             .firstOrNull {
-                (it.source == _currentState) && (it.action == action)
+                areEqual(it.source, _currentState) && areEqual(it.action, action)
             }?.let { mapping ->
                 // make the transition
                 _currentState.exit()
@@ -77,4 +77,7 @@ class StateMachine : IStateMachine {
     private fun requireIncubationFor(operation: String) {
         if (_currentState != CoreState.Incubating) throw IncubationPassedException(operation)
     }
+
+    private fun areEqual(a: IState, b: IState) = (a.javaClass == b.javaClass)
+    private fun areEqual(a: IAction, b: IAction) = (a.javaClass == b.javaClass)
 }
