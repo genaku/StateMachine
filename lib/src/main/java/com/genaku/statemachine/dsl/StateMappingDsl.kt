@@ -22,11 +22,13 @@ infix fun StateVector.goesTo(destination: IState): StateMapping = StateMapping(
 /**
  * Binds an [IAction] and a source [IState] into a [StateVector].
  */
-infix fun IAction.moves(source: IState): StateVector = StateVector(source, this)
-
-infix fun IState.by(action: IAction): StateVector = StateVector(this, action)
+infix fun IAction.moves(source: IState): StateVector = StateVector(source.javaClass, this.javaClass)
+infix fun IAction.moves(source: Class<out IState>): StateVector = StateVector(source, this.javaClass)
+infix fun IState.by(action: IAction): StateVector = StateVector(this.javaClass, action.javaClass)
+infix fun Class<out IState>.by(action: Class<out IAction>): StateVector = StateVector(this, action)
+infix fun Class<out IState>.by(action: IAction): StateVector = StateVector(this, action.javaClass)
 
 /**
  * Holds a [IState] and an [IAction], without knowing anything about the resulting state.
  */
-data class StateVector(val source: IState, val action: IAction)
+data class StateVector(val source: Class<out IState>, val action: Class<out IAction>)

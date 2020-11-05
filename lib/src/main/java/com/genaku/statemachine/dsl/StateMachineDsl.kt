@@ -45,24 +45,24 @@ class StateMachineDsl(
   internal val instance: IStateMachine
 ) {
 
-  /**
-   * Takes a list of [StateMapping]s and adds them into the state machine.
-   *
-   * @see [StateMachine.addStateMapping]
-   */
-  fun mappings(vararg mappings: StateMapping) = apply {
-    mappings.forEach { instance.addStateMapping(it) }
-  }
+    /**
+     * Takes a list of [StateMapping]s and adds them into the state machine.
+     *
+     * @see [StateMachine.addStateMapping]
+     */
+    fun mappings(vararg mappings: StateMapping) = apply {
+        mappings.forEach { instance.addStateMapping(it) }
+    }
 
-  /**
-   * Sets the initial state. Make this call your last configuration call as it creates a transition internally.
-   *
-   * @see [StateMachine.setInitialState]
-   */
-  var initialState: IState
-    @Deprecated("Write-only.", level = HIDDEN)
-    get() = throw UnsupportedOperationException()
-    set(value) = instance.setInitialState(value)
+    /**
+     * Sets the initial state. Make this call your last configuration call as it creates a transition internally.
+     *
+     * @see [StateMachine.setInitialState]
+     */
+    var initialState: IState
+        @Deprecated("Write-only.", level = HIDDEN)
+        get() = throw UnsupportedOperationException()
+        set(value) = instance.setInitialState(value)
 
 }
 
@@ -70,7 +70,7 @@ class StateMachineDsl(
  * Starts the DSL ([StateMachineDsl]) with a configuration block on a new state machine instance.
  */
 fun stateMachine(initialize: StateMachineDsl.() -> Unit): IStateMachine =
-  StateMachineDsl(StateMachine()).apply(initialize).instance
+    StateMachineDsl(StateMachine()).apply(initialize).instance
 
 /**
  * Starts the DSL ([StateMachineDsl]) without a configuration block on a new state machine instance.
