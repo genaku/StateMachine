@@ -43,7 +43,7 @@ class StateMachine : IStateMachine {
 
     @Synchronized
     @Throws(IllegalStateException::class, NoMappingException::class)
-    override fun transition(action: IAction) {
+    override fun handleAction(action: IAction) {
         if (actionsAreEqual(action.javaClass, CoreAction.Birth.javaClass)) {
             throw IllegalStateException("State machine can't be reborn, create a new instance")
         }
@@ -68,8 +68,8 @@ class StateMachine : IStateMachine {
     private fun makeTransition(action: IAction, mapping: StateMapping) {
         _currentState.exit()
         _lastAction = action
-        mapping.destination.enter()
         _currentState = mapping.destination
+        mapping.destination.enter()
     }
 
     @Synchronized

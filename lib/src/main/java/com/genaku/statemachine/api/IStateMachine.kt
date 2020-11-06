@@ -32,11 +32,11 @@ interface IStateMachine {
     fun setInitialState(state: IState)
 
     /**
-     * Attempts to transition the state machine into a new [IState] using the given [IAction].
+     * Attempts to transit the state machine into a new [IState] using the given [IAction].
      *
      * @throws IllegalStateException if transition tries to return state machine to incubation state
      * @throws NoMappingException when proper mapping for [action] from [currentState] not found
      */
     @Throws(IllegalStateException::class, NoMappingException::class)
-    fun transition(action: IAction)
+    fun handleAction(action: IAction)
 }

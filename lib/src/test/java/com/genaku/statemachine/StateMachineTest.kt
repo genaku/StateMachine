@@ -27,7 +27,7 @@ class StateMachineTest : FreeSpec({
                 Heat moves CoreState.Incubating to Liquid
             )
         }
-        sm.transition(Heat)
+        sm.handleAction(Heat)
         shouldThrow<IncubationPassedException> {
             sm.setInitialState(Liquid)
         }
@@ -53,7 +53,7 @@ class StateMachineTest : FreeSpec({
         }
 
         shouldThrow<IllegalStateException> {
-            sm.transition(CoreAction.Birth)
+            sm.handleAction(CoreAction.Birth)
         }
     }
 
@@ -65,7 +65,7 @@ class StateMachineTest : FreeSpec({
             initialState = Liquid
         }
         shouldThrow<NoMappingException> {
-            sm.transition(Chill)
+            sm.handleAction(Chill)
         }
     }
 
@@ -109,52 +109,52 @@ class StateMachineTest : FreeSpec({
             sm.lastAction shouldBe CoreAction.Birth
 
             "fill initial state should transit to liquid" - {
-                sm.transition(Fill)
+                sm.handleAction(Fill)
                 sm.currentState shouldBe Liquid
                 sm.lastAction shouldBe Fill
 
                 "chill liquid should transit to ice" - {
-                    sm.transition(Chill)
+                    sm.handleAction(Chill)
                     sm.currentState shouldBe Ice
                     sm.lastAction shouldBe Chill
 
                     "drink ice should throw NoMappingException" - {
                         shouldThrow<NoMappingException> {
-                            sm.transition(Drink)
+                            sm.handleAction(Drink)
                         }
                         sm.currentState shouldBe Ice
                         sm.lastAction shouldBe Chill
 
                         "heat ice should transit to liquid" - {
-                            sm.transition(Heat)
+                            sm.handleAction(Heat)
                             sm.currentState shouldBe Liquid
                             sm.lastAction shouldBe Heat
 
                             "heat liquid should transit to steam" - {
-                                sm.transition(Heat)
+                                sm.handleAction(Heat)
                                 sm.currentState shouldBe Steam
                                 sm.lastAction shouldBe Heat
 
                                 "drink steam should throw NoMappingException" - {
                                     shouldThrow<NoMappingException> {
-                                        sm.transition(Drink)
+                                        sm.handleAction(Drink)
                                     }
                                     sm.currentState shouldBe Steam
                                     sm.lastAction shouldBe Heat
 
                                     "chill steam should transit to liquid" - {
-                                        sm.transition(Chill)
+                                        sm.handleAction(Chill)
                                         sm.currentState shouldBe Liquid
                                         sm.lastAction shouldBe Chill
 
                                         "drink liquid should transit to empty" - {
-                                            sm.transition(Drink)
+                                            sm.handleAction(Drink)
                                             sm.currentState shouldBe Empty
                                             sm.lastAction shouldBe Drink
 
                                             "drink empty should throw NoMappingException" - {
                                                 shouldThrow<NoMappingException> {
-                                                    sm.transition(Drink)
+                                                    sm.handleAction(Drink)
                                                 }
                                                 sm.currentState shouldBe Empty
                                                 sm.lastAction shouldBe Drink
