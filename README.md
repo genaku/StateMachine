@@ -92,6 +92,18 @@ object Ice : IState {
     }
 }
 ```
+or
+```
+object RequestToServer: IState {
+    override fun enter() {
+        showProgress()
+    }
+
+    override fun exit() {
+        hideProgress()
+    }
+}
+```
 
 To transit state of state machine:
 ```
