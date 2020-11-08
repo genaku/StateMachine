@@ -29,6 +29,7 @@ dependencies {
 
 ## Usage
 
+Define state machine:
 ```
 stateMachine {
     mappings(
@@ -64,6 +65,38 @@ stateMachine {
     )
     initialState = Empty
 }
+```
+
+where
+```
+object Ice: IState
+...
+object Heat: IAction
+...
+
+```
+Interface IState have 2 methods:
+```
+fun enter() {}
+fun exit() {}
+```
+you can implement there what you need to do on enter into state and on exit from state. For example:
+```
+object Ice : IState {
+    override fun enter() {
+        println("freezing")
+    }
+
+    override fun exit() {
+        println("melting")
+    }
+}
+```
+
+To transit state of state machine:
+```
+val sm = stateMachine {...}
+sm.handleAction(Heat)
 ```
 
 ## License
